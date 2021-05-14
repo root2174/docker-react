@@ -1,0 +1,13 @@
+language: generic
+# We need super permissions when dealing with docker
+sudo: required
+services: 
+  - docker
+
+# We need to build our docker image before our tests run.
+before_install:
+  - docker build -t root217/docker-react -f Dockerfile.dev .
+
+# Contains the scripts needed to run the test suite.
+script:
+  - docker run -e CI=true root217/docker-react npm run test
